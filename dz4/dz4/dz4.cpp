@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <math.h>
 #include <fstream>
 #include <ctime>
@@ -85,25 +85,18 @@ void dz43() {
 }
 
 void dz44() {
-	int len = 50;
 	for (int i = 0; i < 13; i++) {
-		cout << i << " ";
-		if (i == 0) {
-			cout << setw(17);
-			for (int j = 0; j < 30; j++) {
-				cout << "=";
-			}
-		}
-		else if (1 <= i && i <= 7) {
+		if (0 <= i && i <= 6) {
 			for (int j = 0; j < 16; j++) {
 				cout << " *";
 			}
+			cout << " ";
 			for (int j = 0; j < 34; j++) {
 				cout << "=";
 			}
 		}
 		else {
-			for (int j = 0; j < len; j++) {
+			for (int j = 0; j < 67; j++) {
 				cout << "=";
 			}
 		}
@@ -111,6 +104,13 @@ void dz44() {
 	}
 }
 
+void dz48() {
+	cout << "Введите число, исходную систему счисления и целевую систему счисления: ";
+	int ishsh, celsh;
+	string x;
+	cin >> x >> ishsh >> celsh;
+
+}
 int main() {
 	srand(time(0));
 	setlocale(LC_ALL, "RUSSIAN");
