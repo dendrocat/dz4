@@ -4,6 +4,7 @@
 #include <ctime>
 #include <string>
 #include <iomanip>
+#include <strstream>
 using namespace std;
 
 void dz41() {
@@ -104,18 +105,108 @@ void dz44() {
 	}
 }
 
+void dz46() {
+	cout << "Введите римское число: ";
+	string x;
+	cin >> x;
+	int* ch = new int[50];
+	for (int i = 0; i < x.length(); i++) {
+		if (x[i] == 'I') {
+			ch[i] = 1;
+		}
+		else if (x[i] == 'V') {
+			ch[i] = 5;
+		}
+		else if (x[i] == 'X') {
+			ch[i] = 10;
+		}
+		else if (x[i] == 'L') {
+			ch[i] = 50;
+		}
+		else if (x[i] == 'C') {
+			ch[i] = 100;
+		}
+		else if (x[i] == 'D') {
+			ch[i] = 500;
+		}
+		else if (x[i] == 'M') {
+			ch[i] = 1000;
+		}
+	}
+	int maxmest = 0;
+	for (int i = x.length() - 2; i >= 0; i--) {
+		if (ch[i + 1] > ch[i]) {
+			maxmest = ch[i + 1];
+			ch[i] = -ch[i];
+		}
+		else if (ch[i] < maxmest) {
+			ch[i] = -ch[i];
+		}
+		else if (ch[i] >= maxmest) {
+			maxmest = ch[i];
+		}
+	}
+	int chislo = 0;
+	for (int i = 0; i < x.length(); i++) {
+		cout << ch[i] << " ";
+		chislo += ch[i];
+	}
+	cout << '\n';
+	cout << chislo << '\n';
+}
+
 void dz48() {
 	cout << "Введите число, исходную систему счисления и целевую систему счисления: ";
 	int ishsh, celsh;
 	string x;
 	cin >> x >> ishsh >> celsh;
-
+	int i = 0;
+	int* ch = new int[50];
+	while (x[i] != '\0') {
+		if ('0' <= x[i] && x[i] <= '9') {
+			ch[i] = (int)x[i] - 48;
+		}
+		else if ('a' <= x[i] && x[i] <= 'z') {
+			ch[i] = (int)x[i] - 87;
+		}
+		else if ('A' <= x[i] && x[i] <= 'Z') {
+			ch[i] = (int)x[i] - 55;
+		}
+		else {
+			cout << "Такого числа не может существовать" << endl;
+			return;
+		}
+		if (ch[i] >= ishsh) {
+			cout << "Цифры " << x[i] << " в системе счисления с основанием " << ishsh << " нет" << endl;
+			return;
+		}
+		i++;
+	}
+	int newx = 0;
+	for (int j = 0; j < i; j++) {
+		newx += ch[i - 1 - j] * pow(ishsh, j);
+	}
+	string new2x;
+	while (newx > 0) {
+		new2x += to_string(newx % celsh);
+		newx = newx / celsh;
+	}
+	int len = new2x.length();
+	for (int j = 0; j < len / 2; j++) {
+		int perstan = new2x[j], index = len - 1 - j;
+		new2x[j] = new2x[index];
+		new2x[index] = perstan;
+	}
+	cout << new2x << endl;
 }
 int main() {
-	srand(time(0));
-	setlocale(LC_ALL, "RUSSIAN");
+	srand(10000);
+	setlocale(LC_ALL, "ru_RU.UTF-8");
 	//dz41();
 	//dz42();
 	//dz43();
-	dz44();
+	//dz44();
+	dz46();
+	//dz48();
+	return 0;
 }
